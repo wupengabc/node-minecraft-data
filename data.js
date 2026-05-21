@@ -1724,7 +1724,7 @@ module.exports =
     '26.1': {
       get attributes () { return require("./minecraft-data/data/pc/1.21.11/attributes.json") },
       get blockCollisionShapes () { return require("./minecraft-data/data/pc/1.21.11/blockCollisionShapes.json") },
-      get blocks () { return require("./minecraft-data/data/pc/1.21.11/blocks.json") },
+      get blocks () { return require("./minecraft-data/data/pc/26.1/blocks.json") },
       get blockLoot () { return require("./minecraft-data/data/pc/1.20/blockLoot.json") },
       get biomes () { return require("./minecraft-data/data/pc/1.21.11/biomes.json") },
       get commands () { return require("./minecraft-data/data/pc/1.20.3/commands.json") },
@@ -1734,7 +1734,7 @@ module.exports =
       get entityLoot () { return require("./minecraft-data/data/pc/1.20/entityLoot.json") },
       get foods () { return require("./minecraft-data/data/pc/1.21.11/foods.json") },
       get instruments () { return require("./minecraft-data/data/pc/1.21.11/instruments.json") },
-      get items () { return require("./minecraft-data/data/pc/1.21.11/items.json") },
+      get items () { return require("./minecraft-data/data/pc/26.1/items.json") },
       get language () { return require("./minecraft-data/data/pc/1.21.11/language.json") },
       get loginPacket () { return require("./minecraft-data/data/pc/1.21.11/loginPacket.json") },
       get mapIcons () { return require("./minecraft-data/data/pc/1.20.2/mapIcons.json") },
