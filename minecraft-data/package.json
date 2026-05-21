@@ -1,0 +1,8 @@
+{
+  "name": "minecraft-data",
+  "private": true,
+  "description": "Minecraft data extracted from the game, used by minecraft-protocol and mineflayer",
+  "scripts": {
+    "test": "node tools/verify-palette-261.js && cd tools/js && npm test"
+  }
+}
