@@ -10898,61 +10898,12 @@
               "type": "varint"
             },
             {
-              "name": "mouse",
+              "name": "hand",
               "type": "varint"
             },
             {
-              "name": "x",
-              "type": [
-                "switch",
-                {
-                  "compareTo": "mouse",
-                  "fields": {
-                    "2": "f32"
-                  },
-                  "default": "void"
-                }
-              ]
-            },
-            {
-              "name": "y",
-              "type": [
-                "switch",
-                {
-                  "compareTo": "mouse",
-                  "fields": {
-                    "2": "f32"
-                  },
-                  "default": "void"
-                }
-              ]
-            },
-            {
-              "name": "z",
-              "type": [
-                "switch",
-                {
-                  "compareTo": "mouse",
-                  "fields": {
-                    "2": "f32"
-                  },
-                  "default": "void"
-                }
-              ]
-            },
-            {
-              "name": "hand",
-              "type": [
-                "switch",
-                {
-                  "compareTo": "mouse",
-                  "fields": {
-                    "0": "varint",
-                    "2": "varint"
-                  },
-                  "default": "void"
-                }
-              ]
+              "name": "location",
+              "type": "lpVec3"
             },
             {
               "name": "sneaking",
