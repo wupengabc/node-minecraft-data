@@ -1081,6 +1081,8 @@
                     }
                   ]
                 ],
+                "additional_trade_cost": "varint",
+                "dye": "varint",
                 "dyed_color": "i32",
                 "map_color": "i32",
                 "map_id": "varint",
@@ -1293,35 +1295,14 @@
                 ],
                 "bucket_entity_data": "anonymousNbt",
                 "instrument": [
-                  "container",
-                  [
-                    {
-                      "name": "hasHolder",
-                      "type": "bool"
-                    },
-                    {
+                  "registryEntryHolder",
+                  {
+                    "baseName": "instrumentId",
+                    "otherwise": {
                       "name": "data",
-                      "type": [
-                        "switch",
-                        {
-                          "compareTo": "hasHolder",
-                          "fields": {
-                            "true": [
-                              "registryEntryHolder",
-                              {
-                                "baseName": "instrumentId",
-                                "otherwise": {
-                                  "name": "data",
-                                  "type": "InstrumentData"
-                                }
-                              }
-                            ],
-                            "false": "string"
-                          }
-                        }
-                      ]
+                      "type": "InstrumentData"
                     }
-                  ]
+                  }
                 ],
                 "provides_trim_material": [
                   "container",
@@ -1511,6 +1492,10 @@
                           "type": [
                             "container",
                             [
+                              {
+                                "name": "entityType",
+                                "type": "varint"
+                              },
                               {
                                 "name": "nbtData",
                                 "type": "anonymousNbt"
