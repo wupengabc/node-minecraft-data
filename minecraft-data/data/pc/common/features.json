@@ -914,26 +914,26 @@
   {
     "name": "gameRuleValues",
     "description": "server sends a clientbound game_rule_values packet that snapshots all gamerule values; mineflayer mirrors them to bot.game.gameRules",
-    "versions": ["26.1", "latest"]
+    "versions": ["26.1", "26.2", "latest"]
   },
   {
     "name": "lowDiskSpaceWarning",
     "description": "server sends a clientbound low_disk_space_warning packet to inform the client that disk space is running low; mineflayer logs a warning and stays connected",
-    "versions": ["26.1", "latest"]
+    "versions": ["26.1", "26.2", "latest"]
   },
   {
     "name": "playerLoaded",
     "description": "client must send a serverbound player_loaded packet once chunks around the player are loaded",
-    "versions": ["26.1", "latest"]
+    "versions": ["26.1", "26.2", "latest"]
   },
   {
     "name": "clientTickEnd",
     "description": "client must send a serverbound client_tick_end packet exactly once per physics tick (20 Hz)",
-    "versions": ["26.1", "latest"]
+    "versions": ["26.1", "26.2", "latest"]
   },
   {
     "name": "splitMovePackets",
     "description": "serverbound movement packets are split into move_player_pos / move_player_pos_rot / move_player_rot / move_player_status_only based on which fields changed since the last tick",
-    "versions": ["26.1", "latest"]
+    "versions": ["26.1", "26.2", "latest"]
   }
 ]

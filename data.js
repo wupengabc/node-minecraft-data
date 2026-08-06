@@ -1746,6 +1746,33 @@ module.exports =
       get tints () { return require("./minecraft-data/data/pc/1.21.11/tints.json") },
       get version () { return require("./minecraft-data/data/pc/26.1/version.json") },
       get windows () { return require("./minecraft-data/data/pc/1.16.1/windows.json") }
+    },
+    '26.2': {
+      get attributes () { return require("./minecraft-data/data/pc/26.2/attributes.json") },
+      get blockCollisionShapes () { return require("./minecraft-data/data/pc/26.2/blockCollisionShapes.json") },
+      get blocks () { return require("./minecraft-data/data/pc/26.2/blocks.json") },
+      get blockLoot () { return require("./minecraft-data/data/pc/1.20/blockLoot.json") },
+      get biomes () { return require("./minecraft-data/data/pc/26.2/biomes.json") },
+      get commands () { return require("./minecraft-data/data/pc/1.20.3/commands.json") },
+      get effects () { return require("./minecraft-data/data/pc/26.2/effects.json") },
+      get enchantments () { return require("./minecraft-data/data/pc/26.2/enchantments.json") },
+      get entities () { return require("./minecraft-data/data/pc/26.2/entities.json") },
+      get entityLoot () { return require("./minecraft-data/data/pc/1.20/entityLoot.json") },
+      get foods () { return require("./minecraft-data/data/pc/26.2/foods.json") },
+      get instruments () { return require("./minecraft-data/data/pc/26.2/instruments.json") },
+      get items () { return require("./minecraft-data/data/pc/26.2/items.json") },
+      get language () { return require("./minecraft-data/data/pc/26.2/language.json") },
+      get loginPacket () { return require("./minecraft-data/data/pc/1.21.11/loginPacket.json") },
+      get mapIcons () { return require("./minecraft-data/data/pc/1.20.2/mapIcons.json") },
+      get materials () { return require("./minecraft-data/data/pc/26.2/materials.json") },
+      get particles () { return require("./minecraft-data/data/pc/26.2/particles.json") },
+      get protocol () { return require("./minecraft-data/data/pc/26.2/protocol.json") },
+      get recipes () { return require("./minecraft-data/data/pc/26.2/recipes.json") },
+      get sounds () { return require("./minecraft-data/data/pc/26.2/sounds.json") },
+      get tints () { return require("./minecraft-data/data/pc/26.2/tints.json") },
+      get version () { return require("./minecraft-data/data/pc/26.2/version.json") },
+      get windows () { return require("./minecraft-data/data/pc/1.16.1/windows.json") },
+      proto: __dirname + '/minecraft-data/data/pc/latest/proto.yml'
     }
   },
   'bedrock': {
