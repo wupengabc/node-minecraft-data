@@ -1372,6 +1372,9 @@ declare namespace MinecraftData {
     /** `1.19.3 - latest`
      * The player_info packet may contain multiple actions in one packet. The actions field is a bitfield signifying what actions are included */
     "playerInfoActionIsBitfield": boolean;
+    /** `26.1 - latest`
+     * client sends a player_loaded packet after each completed chunk load on protocol 775 and 776 */
+    "playerLoaded": boolean;
     /** `1.9 - latest`
      * the /playsound command uses resource location syntax */
     "playsoundUsesResourceLocation": boolean;

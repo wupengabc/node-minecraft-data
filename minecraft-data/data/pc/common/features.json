@@ -880,6 +880,14 @@
     ]
   },
   {
+    "name": "playerLoaded",
+    "description": "client sends a player_loaded packet after each completed chunk load on protocol 775 and 776",
+    "versions": [
+      "26.1",
+      "latest"
+    ]
+  },
+  {
     "name": "playsoundUsesResourceLocation",
     "description": "the /playsound command uses resource location syntax",
     "versions": [
