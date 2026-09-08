@@ -738,18 +738,12 @@
       data: type ?
          if block or block_marker or falling_dust or dust_pillar or block_crumble: varint
          if dust:
-            red: f32
-            green: f32
-            blue: f32
+            color: i32
             scale: f32
          if dust_color_transition:
-            fromRed: f32
-            fromGreen: f32
-            fromBlue: f32
+            fromColor: i32
+            toColor: i32
             scale: f32
-            toRed: f32
-            toGreen: f32
-            toBlue: f32
          if entity_effect: i32
          if item: Slot
          if sculk_charge: f32
@@ -766,7 +760,8 @@
             ticks: varint
          if trail:
             target: vec3f64
-            color: u8
+            color: i32
+            duration: varint
          if tinted_leaves: i32
          if firefly: void
    ingredient: Slot[]varint
@@ -888,7 +883,7 @@
          if wolf_sound_variant: varint
          if frog_variant: varint
          if pig_variant: varint
-         if chicken_variant: ["registryEntryHolder", { "baseName": "variantId", "otherwise": { "name": "variantData", "type": "string" } }]
+         if chicken_variant: varint
          if optional_global_pos: ["option", "string"]
          if painting_variant: ["registryEntryHolder", {
             "baseName": "variantId",
@@ -1278,7 +1273,7 @@
    # MC: ServerboundCookieResponsePacket
    packet_common_cookie_response:
       key: string
-      value: ByteArray
+      value?: ByteArray
    # MC: ServerboundSelectKnownPacks
    # MC: ClientboundSelectKnownPacks
    packet_common_select_known_packs:
@@ -3076,7 +3071,7 @@
    # MC: ServerboundContainerButtonClickPacket
    packet_enchant_item:
       windowId: ContainerID
-      enchantment: i8
+      enchantment: varint
    # MC: ServerboundContainerClickPacket
    packet_window_click:
       windowId: ContainerID
