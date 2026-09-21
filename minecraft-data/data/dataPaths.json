@@ -1773,6 +1773,33 @@
       "version": "pc/26.2",
       "windows": "pc/1.16.1",
       "proto": "pc/latest"
+    },
+    "26.3": {
+      "attributes": "pc/26.3",
+      "blockCollisionShapes": "pc/26.3",
+      "blocks": "pc/26.3",
+      "blockLoot": "pc/1.20",
+      "biomes": "pc/26.3",
+      "commands": "pc/1.20.3",
+      "effects": "pc/26.3",
+      "enchantments": "pc/26.3",
+      "entities": "pc/26.3",
+      "entityLoot": "pc/1.20",
+      "foods": "pc/26.3",
+      "instruments": "pc/26.3",
+      "items": "pc/26.3",
+      "language": "pc/26.3",
+      "loginPacket": "pc/26.1",
+      "mapIcons": "pc/1.20.2",
+      "materials": "pc/26.3",
+      "particles": "pc/26.3",
+      "protocol": "pc/26.3",
+      "recipes": "pc/26.3",
+      "sounds": "pc/26.3",
+      "tints": "pc/26.3",
+      "version": "pc/26.3",
+      "windows": "pc/1.16.1",
+      "proto": "pc/latest"
     }
   },
   "bedrock": {
