@@ -1,6 +1,8 @@
 # node-minecraft-data
 
-[![NPM version](https://badge.fury.io/js/minecraft-data.svg)](http://badge.fury.io/js/minecraft-data)
+> **Fork (wupengabc):** adds **Minecraft 26.3 (protocol 777)** support. Published to npm as [`@wp2508/minecraft-data`](https://www.npmjs.com/package/@wp2508/minecraft-data) — install with `npm install @wp2508/minecraft-data` and `require('@wp2508/minecraft-data')`. Upstream: [PrismarineJS/node-minecraft-data](https://github.com/PrismarineJS/node-minecraft-data).
+
+[![NPM version](https://img.shields.io/npm/v/@wp2508/minecraft-data.svg?color=success&label=npm%20package&logo=npm)](https://www.npmjs.com/package/@wp2508/minecraft-data)
 [![Tonic](https://img.shields.io/badge/tonic-try%20it-blue.svg)](https://tonicdev.com/npm/minecraft-data)
 [![Build Status](https://github.com/PrismarineJS/node-minecraft-data/workflows/CI/badge.svg)](https://github.com/PrismarineJS/node-minecraft-data/actions?query=workflow%3A%22CI%22)
 [![Try it on gitpod](https://img.shields.io/badge/try-on%20gitpod-brightgreen.svg)](https://gitpod.io/#https://github.com/PrismarineJS/node-minecraft-data)
@@ -16,7 +18,7 @@ This package allows the lookup of blocks, items, entities, etc. by name, id, etc
 ## Example
 
 ```js
-const minecraftData = require('minecraft-data')
+const minecraftData = require('@wp2508/minecraft-data')
 // or for es6: import minecraftData from 'minecraft-data';
 
 const mcData = minecraftData('1.19')
