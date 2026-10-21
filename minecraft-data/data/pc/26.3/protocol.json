@@ -2,6 +2,8 @@
   "types": {
     "varint": "native",
     "varlong": "native",
+    "optionalVarInt": "native",
+    "clickActionNbt": "native",
     "optvarint": "varint",
     "pstring": "native",
     "buffer": "native",
@@ -328,37 +330,7 @@
                 ],
                 "custom_name": "anonymousNbt",
                 "minimum_attack_charge": "f32",
-                "damage_type": [
-                  "container",
-                  [
-                    {
-                      "name": "hasHolder",
-                      "type": "bool"
-                    },
-                    {
-                      "name": "damageType",
-                      "type": [
-                        "switch",
-                        {
-                          "compareTo": "hasHolder",
-                          "fields": {
-                            "true": [
-                              "registryEntryHolder",
-                              {
-                                "baseName": "damageTypeId",
-                                "otherwise": {
-                                  "name": "data",
-                                  "type": "DamageTypeData"
-                                }
-                              }
-                            ],
-                            "false": "string"
-                          }
-                        }
-                      ]
-                    }
-                  ]
-                ],
+                "damage_type": "varint",
                 "item_name": "anonymousNbt",
                 "item_model": "string",
                 "lore": [
@@ -748,12 +720,13 @@
                             "2": "drink",
                             "3": "block",
                             "4": "bow",
-                            "5": "spear",
+                            "5": "trident",
                             "6": "crossbow",
                             "7": "spyglass",
                             "8": "toot_horn",
                             "9": "brush",
-                            "10": "bundle"
+                            "10": "bundle",
+                            "11": "spear"
                           }
                         }
                       ]
@@ -778,7 +751,7 @@
                     }
                   ]
                 ],
-                "use_remainder": "Slot",
+                "use_remainder": "ItemStackTemplate",
                 "use_cooldown": [
                   "container",
                   [
@@ -1070,7 +1043,30 @@
                     }
                   ]
                 ],
-                "swing_animation": [
+                "attack_animation": [
+                  "container",
+                  [
+                    {
+                      "name": "type",
+                      "type": [
+                        "mapper",
+                        {
+                          "type": "varint",
+                          "mappings": {
+                            "0": "none",
+                            "1": "whack",
+                            "2": "stab"
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "duration",
+                      "type": "varint"
+                    }
+                  ]
+                ],
+                "interact_animation": [
                   "container",
                   [
                     {
@@ -1094,9 +1090,18 @@
                   ]
                 ],
                 "additional_trade_cost": "varint",
+                "block_transformer": "varint",
+                "villager_food": [
+                  "container",
+                  [
+                    {
+                      "name": "nutrition",
+                      "type": "varint"
+                    }
+                  ]
+                ],
                 "dye": "varint",
                 "dyed_color": "i32",
-                "map_color": "i32",
                 "map_id": "varint",
                 "map_decorations": "anonymousNbt",
                 "map_post_processing": "varint",
@@ -1110,7 +1115,7 @@
                         "array",
                         {
                           "countType": "varint",
-                          "type": "Slot"
+                          "type": "ItemStackTemplate"
                         }
                       ]
                     }
@@ -1125,7 +1130,7 @@
                         "array",
                         {
                           "countType": "varint",
-                          "type": "Slot"
+                          "type": "ItemStackTemplate"
                         }
                       ]
                     }
@@ -1459,7 +1464,10 @@
                         "array",
                         {
                           "countType": "varint",
-                          "type": "Slot"
+                          "type": [
+                            "option",
+                            "ItemStackTemplate"
+                          ]
                         }
                       ]
                     }
@@ -1594,7 +1602,60 @@
                 "cat/sound_variant": "varint",
                 "cat/collar": "varint",
                 "sheep/color": "varint",
-                "shulker/color": "varint"
+                "shulker/color": "varint",
+                "compostable": [
+                  "container",
+                  [
+                    {
+                      "name": "layers",
+                      "type": "ResolvableInt"
+                    }
+                  ]
+                ],
+                "cooking_fuel": [
+                  "container",
+                  [
+                    {
+                      "name": "burnTime",
+                      "type": "ResolvableInt"
+                    },
+                    {
+                      "name": "speedMultiplier",
+                      "type": "ResolvableFloat"
+                    }
+                  ]
+                ],
+                "brewing_fuel": [
+                  "container",
+                  [
+                    {
+                      "name": "uses",
+                      "type": "ResolvableInt"
+                    },
+                    {
+                      "name": "speedMultiplier",
+                      "type": "ResolvableFloat"
+                    }
+                  ]
+                ],
+                "mob_visibility": [
+                  "container",
+                  [
+                    {
+                      "name": "targetingEntityTypes",
+                      "type": "IDSet"
+                    },
+                    {
+                      "name": "visibility",
+                      "type": "f32"
+                    }
+                  ]
+                ],
+                "provides_pottery_pattern": "varint",
+                "sign_text_front": "SignText",
+                "sign_text_back": "SignText",
+                "waxed": "void",
+                "cushion/color": "DyeColor"
               }
             }
           ]
@@ -1767,6 +1828,86 @@
         }
       ]
     ],
+    "ResolvableInt": [
+      "container",
+      [
+        {
+          "name": "isConstant",
+          "type": "bool"
+        },
+        {
+          "name": "value",
+          "type": [
+            "switch",
+            {
+              "compareTo": "isConstant",
+              "fields": {
+                "true": "i32",
+                "false": "string"
+              }
+            }
+          ]
+        }
+      ]
+    ],
+    "ResolvableFloat": [
+      "container",
+      [
+        {
+          "name": "isConstant",
+          "type": "bool"
+        },
+        {
+          "name": "value",
+          "type": [
+            "switch",
+            {
+              "compareTo": "isConstant",
+              "fields": {
+                "true": "f32",
+                "false": "string"
+              }
+            }
+          ]
+        }
+      ]
+    ],
+    "SignText": [
+      "container",
+      [
+        {
+          "name": "messages",
+          "type": [
+            "array",
+            {
+              "count": 4,
+              "type": "anonymousNbt"
+            }
+          ]
+        },
+        {
+          "name": "filteredMessages",
+          "type": [
+            "option",
+            [
+              "array",
+              {
+                "count": 4,
+                "type": "anonymousNbt"
+              }
+            ]
+          ]
+        },
+        {
+          "name": "color",
+          "type": "DyeColor"
+        },
+        {
+          "name": "hasGlowingText",
+          "type": "bool"
+        }
+      ]
+    ],
     "ExactComponentMatcher": [
       "array",
       {
@@ -1863,7 +2004,10 @@
         },
         {
           "name": "filteredContent",
-          "type": "anonOptionalNbt"
+          "type": [
+            "option",
+            "anonymousNbt"
+          ]
         }
       ]
     ],
@@ -1928,7 +2072,8 @@
                     {
                       "name": "diameter",
                       "type": "f32"
-                    }
+                    },
+                    { "name": "directionalParticles", "type": "bool" }
                   ]
                 ],
                 "play_sound": [
@@ -3303,117 +3448,130 @@
                 "1": "block",
                 "2": "block_marker",
                 "3": "bubble",
-                "4": "cloud",
-                "5": "copper_fire_flame",
-                "6": "crit",
-                "7": "damage_indicator",
-                "8": "dragon_breath",
-                "9": "dripping_lava",
-                "10": "falling_lava",
-                "11": "landing_lava",
-                "12": "dripping_water",
-                "13": "falling_water",
-                "14": "dust",
-                "15": "dust_color_transition",
-                "16": "effect",
-                "17": "elder_guardian",
-                "18": "enchanted_hit",
-                "19": "enchant",
-                "20": "end_rod",
-                "21": "entity_effect",
-                "22": "explosion_emitter",
-                "23": "explosion",
-                "24": "gust",
-                "25": "small_gust",
-                "26": "gust_emitter_large",
-                "27": "gust_emitter_small",
-                "28": "sonic_boom",
-                "29": "falling_dust",
-                "30": "firework",
-                "31": "fishing",
-                "32": "flame",
-                "33": "infested",
-                "34": "cherry_leaves",
-                "35": "pale_oak_leaves",
-                "36": "tinted_leaves",
-                "37": "sculk_soul",
-                "38": "sculk_charge",
-                "39": "sculk_charge_pop",
-                "40": "soul_fire_flame",
-                "41": "soul",
-                "42": "flash",
-                "43": "happy_villager",
-                "44": "composter",
-                "45": "heart",
-                "46": "instant_effect",
-                "47": "item",
-                "48": "vibration",
-                "49": "trail",
-                "50": "item_slime",
-                "51": "item_cobweb",
-                "52": "item_snowball",
-                "53": "large_smoke",
-                "54": "lava",
-                "55": "mycelium",
-                "56": "note",
-                "57": "poof",
-                "58": "portal",
-                "59": "rain",
-                "60": "smoke",
-                "61": "white_smoke",
-                "62": "sneeze",
-                "63": "spit",
-                "64": "squid_ink",
-                "65": "sweep_attack",
-                "66": "totem_of_undying",
-                "67": "underwater",
-                "68": "splash",
-                "69": "witch",
-                "70": "bubble_pop",
-                "71": "current_down",
-                "72": "bubble_column_up",
-                "73": "nautilus",
-                "74": "dolphin",
-                "75": "campfire_cosy_smoke",
-                "76": "campfire_signal_smoke",
-                "77": "dripping_honey",
-                "78": "falling_honey",
-                "79": "landing_honey",
-                "80": "falling_nectar",
-                "81": "falling_spore_blossom",
-                "82": "ash",
-                "83": "crimson_spore",
-                "84": "warped_spore",
-                "85": "spore_blossom_air",
-                "86": "dripping_obsidian_tear",
-                "87": "falling_obsidian_tear",
-                "88": "landing_obsidian_tear",
-                "89": "reverse_portal",
-                "90": "white_ash",
-                "91": "small_flame",
-                "92": "snowflake",
-                "93": "dripping_dripstone_lava",
-                "94": "falling_dripstone_lava",
-                "95": "dripping_dripstone_water",
-                "96": "falling_dripstone_water",
-                "97": "glow_squid_ink",
-                "98": "glow",
-                "99": "wax_on",
-                "100": "wax_off",
-                "101": "electric_spark",
-                "102": "scrape",
-                "103": "shriek",
-                "104": "egg_crack",
-                "105": "dust_plume",
-                "106": "trial_spawner_detected_player",
-                "107": "trial_spawner_detected_player_ominous",
-                "108": "vault_connection",
-                "109": "dust_pillar",
-                "110": "ominous_spawning",
-                "111": "raid_omen",
-                "112": "trial_omen",
-                "113": "block_crumble",
-                "114": "firefly"
+                "4": "sulfur_bubbles",
+                "5": "noxious_gas",
+                "6": "noxious_gas_cloud",
+                "7": "geyser",
+                "8": "geyser_base",
+                "9": "geyser_poof",
+                "10": "geyser_plume",
+                "11": "cloud",
+                "12": "copper_fire_flame",
+                "13": "crit",
+                "14": "damage_indicator",
+                "15": "dragon_breath",
+                "16": "dripping_lava",
+                "17": "falling_lava",
+                "18": "landing_lava",
+                "19": "dripping_water",
+                "20": "falling_water",
+                "21": "dust",
+                "22": "dust_color_transition",
+                "23": "effect",
+                "24": "elder_guardian",
+                "25": "enchanted_hit",
+                "26": "enchant",
+                "27": "end_rod",
+                "28": "entity_effect",
+                "29": "explosion_emitter",
+                "30": "explosion",
+                "31": "gust",
+                "32": "small_gust",
+                "33": "gust_emitter_large",
+                "34": "gust_emitter_small",
+                "35": "sonic_boom",
+                "36": "falling_dust",
+                "37": "firework",
+                "38": "fishing",
+                "39": "flame",
+                "40": "infested",
+                "41": "cherry_leaves",
+                "42": "pale_oak_leaves",
+                "43": "red_poplar_leaves",
+                "44": "orange_poplar_leaves",
+                "45": "yellow_poplar_leaves",
+                "46": "tinted_leaves",
+                "47": "sculk_soul",
+                "48": "sculk_charge",
+                "49": "sculk_charge_pop",
+                "50": "soul_fire_flame",
+                "51": "soul",
+                "52": "flash",
+                "53": "happy_villager",
+                "54": "composter",
+                "55": "heart",
+                "56": "instant_effect",
+                "57": "item",
+                "58": "vibration",
+                "59": "trail",
+                "60": "pause_mob_growth",
+                "61": "reset_mob_growth",
+                "62": "item_slime",
+                "63": "item_cobweb",
+                "64": "item_snowball",
+                "65": "large_smoke",
+                "66": "lava",
+                "67": "mycelium",
+                "68": "note",
+                "69": "poof",
+                "70": "portal",
+                "71": "rain",
+                "72": "smoke",
+                "73": "white_smoke",
+                "74": "sneeze",
+                "75": "spit",
+                "76": "squid_ink",
+                "77": "sweep_attack",
+                "78": "totem_of_undying",
+                "79": "underwater",
+                "80": "splash",
+                "81": "witch",
+                "82": "bubble_pop",
+                "83": "current_down",
+                "84": "bubble_column_up",
+                "85": "nautilus",
+                "86": "dolphin",
+                "87": "campfire_cosy_smoke",
+                "88": "campfire_signal_smoke",
+                "89": "dripping_honey",
+                "90": "falling_honey",
+                "91": "landing_honey",
+                "92": "falling_nectar",
+                "93": "falling_spore_blossom",
+                "94": "ash",
+                "95": "crimson_spore",
+                "96": "warped_spore",
+                "97": "spore_blossom_air",
+                "98": "dripping_obsidian_tear",
+                "99": "falling_obsidian_tear",
+                "100": "landing_obsidian_tear",
+                "101": "reverse_portal",
+                "102": "white_ash",
+                "103": "small_flame",
+                "104": "snowflake",
+                "105": "dripping_dripstone_lava",
+                "106": "falling_dripstone_lava",
+                "107": "dripping_dripstone_water",
+                "108": "falling_dripstone_water",
+                "109": "glow_squid_ink",
+                "110": "glow",
+                "111": "wax_on",
+                "112": "wax_off",
+                "113": "electric_spark",
+                "114": "scrape",
+                "115": "shriek",
+                "116": "egg_crack",
+                "117": "dust_plume",
+                "118": "trial_spawner_detection",
+                "119": "trial_spawner_detection_ominous",
+                "120": "vault_connection",
+                "121": "dust_pillar",
+                "122": "ominous_spawning",
+                "123": "raid_omen",
+                "124": "trial_omen",
+                "125": "block_crumble",
+                "126": "firefly",
+                "127": "sulfur_cube_goo"
               }
             }
           ]
@@ -3433,18 +3591,7 @@
                 "dust": [
                   "container",
                   [
-                    {
-                      "name": "red",
-                      "type": "f32"
-                    },
-                    {
-                      "name": "green",
-                      "type": "f32"
-                    },
-                    {
-                      "name": "blue",
-                      "type": "f32"
-                    },
+                    { "name": "color", "type": "i32" },
                     {
                       "name": "scale",
                       "type": "f32"
@@ -3454,38 +3601,20 @@
                 "dust_color_transition": [
                   "container",
                   [
-                    {
-                      "name": "fromRed",
-                      "type": "f32"
-                    },
-                    {
-                      "name": "fromGreen",
-                      "type": "f32"
-                    },
-                    {
-                      "name": "fromBlue",
-                      "type": "f32"
-                    },
+                    { "name": "fromColor", "type": "i32" },
+                    { "name": "toColor", "type": "i32" },
                     {
                       "name": "scale",
-                      "type": "f32"
-                    },
-                    {
-                      "name": "toRed",
-                      "type": "f32"
-                    },
-                    {
-                      "name": "toGreen",
-                      "type": "f32"
-                    },
-                    {
-                      "name": "toBlue",
                       "type": "f32"
                     }
                   ]
                 ],
                 "entity_effect": "i32",
-                "item": "Slot",
+                "item": "ItemStackTemplate",
+                "geyser": ["container", [{"name":"waterBlocks","type":"i32"}]],
+                "geyser_plume": ["container", [{"name":"waterBlocks","type":"i32"}]],
+                "geyser_base": ["container", [{"name":"waterBlocks","type":"i32"},{"name":"burstImpulseBase","type":"f32"}]],
+                "geyser_poof": ["container", [{"name":"waterBlocks","type":"i32"},{"name":"burstImpulseBase","type":"f32"}]],
                 "sculk_charge": "f32",
                 "shriek": "varint",
                 "vibration": [
@@ -3544,8 +3673,9 @@
                     },
                     {
                       "name": "color",
-                      "type": "u8"
-                    }
+                      "type": "i32"
+                    },
+                    { "name": "duration", "type": "varint" }
                   ]
                 ],
                 "tinted_leaves": "i32",
@@ -5003,10 +5133,7 @@
         },
         {
           "name": "nbt",
-          "type": [
-            "option",
-            "anonymousNbt"
-          ]
+          "type": "clickActionNbt"
         }
       ]
     ],
@@ -6235,7 +6362,7 @@
               "type": [
                 "mapper",
                 {
-                  "type": "i8",
+                  "type": "varint",
                   "mappings": {
                     "0": "survival",
                     "1": "creative",
@@ -6247,7 +6374,7 @@
             },
             {
               "name": "previousGamemode",
-              "type": "u8"
+              "type": "optionalVarInt"
             },
             {
               "name": "isDebug",
@@ -7432,7 +7559,7 @@
             },
             {
               "name": "amount",
-              "type": "i32"
+              "type": "varint"
             },
             {
               "name": "randomizationType",
@@ -7854,19 +7981,19 @@
                     [
                       {
                         "name": "position",
-                        "type": "vec3f"
+                        "type": "vec3f64"
                       },
                       {
                         "name": "velocity",
-                        "type": "vec3f"
+                        "type": "vec3f64"
                       },
                       {
                         "name": "yaw",
-                        "type": "f32"
+                        "type": "i8"
                       },
                       {
                         "name": "pitch",
-                        "type": "f32"
+                        "type": "i8"
                       },
                       {
                         "name": "weight",
@@ -8152,8 +8279,8 @@
                     "update_listed",
                     "update_latency",
                     "update_display_name",
-                    "update_hat",
-                    "update_list_order"
+                    "update_list_order",
+                    "update_hat"
                   ]
                 }
               ]
@@ -9570,14 +9697,18 @@
               "name": "z",
               "type": "f64"
             },
+            { "name": "dx", "type": "f64" },
+            { "name": "dy", "type": "f64" },
+            { "name": "dz", "type": "f64" },
             {
               "name": "yaw",
-              "type": "i8"
+              "type": "f32"
             },
             {
               "name": "pitch",
-              "type": "i8"
+              "type": "f32"
             },
+            { "name": "flags", "type": "u32" },
             {
               "name": "onGround",
               "type": "bool"
@@ -9671,7 +9802,7 @@
                                     },
                                     {
                                       "name": "icon",
-                                      "type": "Slot"
+                                      "type": "ItemStackTemplate"
                                     },
                                     {
                                       "name": "frameType",
@@ -9717,14 +9848,6 @@
                                           "default": "void"
                                         }
                                       ]
-                                    },
-                                    {
-                                      "name": "xCord",
-                                      "type": "f32"
-                                    },
-                                    {
-                                      "name": "yCord",
-                                      "type": "f32"
                                     }
                                   ]
                                 ]
@@ -9848,37 +9971,46 @@
                           {
                             "type": "varint",
                             "mappings": {
-                              "0": "generic.armor",
-                              "1": "generic.armor_toughness",
-                              "2": "generic.attack_damage",
-                              "3": "generic.attack_knockback",
-                              "4": "generic.attack_speed",
-                              "5": "player.block_break_speed",
-                              "6": "player.block_interaction_range",
-                              "7": "burning_time",
-                              "8": "camera_distance",
-                              "9": "explosion_knockback_resistance",
-                              "10": "player.entity_interaction_range",
-                              "11": "generic.fall_damage_multiplier",
-                              "12": "generic.flying_speed",
-                              "13": "generic.follow_range",
-                              "14": "generic.gravity",
-                              "15": "generic.jump_strength",
-                              "16": "generic.knockback_resistance",
-                              "17": "generic.luck",
-                              "18": "generic.max_absorption",
-                              "19": "generic.max_health",
-                              "20": "generic.movement_speed",
-                              "21": "generic.safe_fall_distance",
-                              "22": "generic.scale",
-                              "23": "zombie.spawn_reinforcements",
-                              "24": "generic.step_height",
-                              "25": "submerged_mining_speed",
-                              "26": "sweeping_damage_ratio",
-                              "27": "tempt_range",
-                              "28": "water_movement_efficiency",
-                              "29": "waypoint_transmit_range",
-                              "30": "waypoint_receive_range"
+                              "0": "air_drag_modifier",
+                              "1": "generic.armor",
+                              "2": "generic.armor_toughness",
+                              "3": "generic.attack_damage",
+                              "4": "generic.attack_knockback",
+                              "5": "generic.attack_speed",
+                              "6": "below_name_distance",
+                              "7": "player.block_break_speed",
+                              "8": "player.block_interaction_range",
+                              "9": "bounciness",
+                              "10": "burning_time",
+                              "11": "camera_distance",
+                              "12": "explosion_knockback_resistance",
+                              "13": "player.entity_interaction_range",
+                              "14": "generic.fall_damage_multiplier",
+                              "15": "generic.flying_speed",
+                              "16": "generic.follow_range",
+                              "17": "friction_modifier",
+                              "18": "generic.gravity",
+                              "19": "generic.jump_strength",
+                              "20": "generic.knockback_resistance",
+                              "21": "generic.luck",
+                              "22": "generic.max_absorption",
+                              "23": "generic.max_health",
+                              "24": "mining_efficiency",
+                              "25": "movement_efficiency",
+                              "26": "generic.movement_speed",
+                              "27": "name_tag_distance",
+                              "28": "oxygen_bonus",
+                              "29": "generic.safe_fall_distance",
+                              "30": "generic.scale",
+                              "31": "sneaking_speed",
+                              "32": "zombie.spawn_reinforcements",
+                              "33": "generic.step_height",
+                              "34": "submerged_mining_speed",
+                              "35": "sweeping_damage_ratio",
+                              "36": "tempt_range",
+                              "37": "water_movement_efficiency",
+                              "38": "waypoint_transmit_range",
+                              "39": "waypoint_receive_range"
                             }
                           }
                         ]
@@ -10875,7 +11007,7 @@
             },
             {
               "name": "enchantment",
-              "type": "i8"
+              "type": "varint"
             }
           ]
         ],
@@ -11602,21 +11734,13 @@
             },
             {
               "name": "seed",
-              "type": "varint"
+              "type": "varlong"
             },
             {
               "name": "flags",
               "type": [
-                "mapper",
-                {
-                  "type": "u8",
-                  "mappings": {
-                    "0": "ignore_entities",
-                    "1": "show_air",
-                    "2": "show_bounding_box",
-                    "3": "strict"
-                  }
-                }
+                "bitflags",
+                { "type": "u8", "flags": ["ignore_entities", "show_air", "show_bounding_box", "strict"] }
               ]
             }
           ]
@@ -11675,10 +11799,7 @@
           [
             {
               "name": "spectateEntityId",
-              "type": [
-                "option",
-                "varint"
-              ]
+              "type": "optionalVarInt"
             }
           ]
         ],
